@@ -84,8 +84,9 @@ const SuiteEngine = (() => {
                 frame.classList.add('active');
                 
                 // Only load the URL if it hasn't been loaded yet
-                if (frame.src === 'about:blank' || frame.src.endsWith('about:blank')) {
+                if (!frame.dataset.loaded) {
                     frame.src = APPS[appId].url;
+                    frame.dataset.loaded = 'true';
                     
                     // Focus injection after load
                     frame.onload = () => {
