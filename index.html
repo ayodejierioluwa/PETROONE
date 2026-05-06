@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroOne Suite | Unified Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loader" class="loading-overlay">
+        <div class="spinner"></div>
+        <p style="color: var(--text-secondary); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;">Initializing Suite Systems</p>
+    </div>
+
+    <div class="suite-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="brand-section" onclick="SuiteEngine.switchApp('home')">
+                <div class="brand-logo"></div>
+                <h1 class="brand-name">PetroOne</h1>
+            </div>
+
+            <nav class="nav-group">
+                <span class="nav-title">Navigation</span>
+                <div class="nav-item active" id="nav-home" onclick="SuiteEngine.switchApp('home')">
+                    <div class="status-indicator online"></div>
+                    <span>Global Overview</span>
+                </div>
+            </nav>
+
+            <nav class="nav-group">
+                <span class="nav-title">Operations Suite</span>
+                
+                <div class="nav-item" id="nav-gaia" onclick="SuiteEngine.switchApp('gaia')">
+                    <div class="status-indicator" id="dot-gaia"></div>
+                    <span>GAIA AI</span>
+                </div>
+
+                <div class="nav-item" id="nav-petrosight" onclick="SuiteEngine.switchApp('petrosight')">
+                    <div class="status-indicator" id="dot-petrosight"></div>
+                    <span>PetroSight AI</span>
+                </div>
+
+                <div class="nav-item" id="nav-omesham" onclick="SuiteEngine.switchApp('omesham')">
+                    <div class="status-indicator" id="dot-omesham"></div>
+                    <span>Omesham AI</span>
+                </div>
+
+                <div class="nav-item" id="nav-petweb" onclick="SuiteEngine.switchApp('petweb')">
+                    <div class="status-indicator" id="dot-petweb"></div>
+                    <span>PetWeb Finder</span>
+                </div>
+            </nav>
+
+            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                <div style="font-size: 0.7rem; color: var(--text-secondary);">Manager Status:</div>
+                <div id="manager-status" style="font-size: 0.8rem; font-weight: 700;">CONNECTING...</div>
+            </div>
+        </aside>
+
+        <!-- MAIN STAGE -->
+        <main class="main-stage">
+            <header class="top-bar">
+                <div class="current-context">
+                    <div class="breadcrumb">PetroOne / <span id="bread-path">Dashboard</span></div>
+                    <h2 class="context-title" id="bread-title">Global Overview</h2>
+                </div>
+                <div class="header-actions">
+                    <button id="main-launch-btn" class="launch-btn" onclick="SuiteEngine.launchAll()">Initialize Suite</button>
+                </div>
+            </header>
+
+            <div class="workspace">
+                <!-- DASHBOARD VIEW -->
+                <div id="view-home" class="viewport active">
+                    <div class="dash-grid">
+                        <div class="card">
+                            <div class="card-label">Total Daily Production</div>
+                            <div class="card-value">42,850 <span style="font-size: 0.9rem; color: var(--text-secondary);">bbl/d</span></div>
+                            <div class="card-trend trend-up">↑ 4.2% Growth</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">Operational Efficiency</div>
+                            <div class="card-value">94.2<span style="font-size: 0.9rem; color: var(--text-secondary);">%</span></div>
+                            <div class="card-trend">Optimal Performance</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">Active Field Assets</div>
+                            <div class="card-value">124</div>
+                            <div class="card-trend trend-up">All Systems Normal</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-grid" style="grid-template-columns: 2fr 1fr;">
+                        <div class="rig-view">
+                            <div style="padding: 1rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between;">
+                                <span style="font-size: 0.8rem; font-weight: 700;">Rig Alpha — Wireframe Analysis</span>
+                                <span style="font-size: 0.7rem; color: var(--accent-emerald);">LIVE DATA</span>
+                            </div>
+                            <div class="rig-image-container">
+                                <img src="rig_alpha.png" alt="Rig Alpha" class="rig-image">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">Fleet Maintenance</div>
+                            <div style="height: 120px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--glass-border); margin-bottom: 1rem;">
+                                <div style="width: 80px; height: 80px; border-radius: 50%; border: 8px solid var(--accent-emerald); display: flex; align-items: center; justify-content: center; font-weight: 800;">75%</div>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Next fleet audit scheduled in 14 days. 12 units currently in preventative cycles.</p>
+                        </div>
+                    </div>
+
+                    <!-- Additional Cards for Scrolling -->
+                    <div class="dash-grid">
+                        <div class="card">
+                            <div class="card-label">Carbon Intensity Index</div>
+                            <div class="card-value">14.2 <span style="font-size: 0.8rem; color: var(--text-secondary);">kg CO2/boe</span></div>
+                            <div class="card-trend trend-up">↓ 8% Reduction</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">Financial Burn Rate</div>
+                            <div class="card-value">$8.4M <span style="font-size: 0.8rem; color: var(--text-secondary);">/mo</span></div>
+                            <div class="card-trend">Within Budget</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">HSE Incident Free Days</div>
+                            <div class="card-value">342</div>
+                            <div class="card-trend trend-up">Target: 365</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-grid">
+                        <div class="card">
+                            <div class="card-label">Real-time Drilling Depth</div>
+                            <div class="card-value">12,450 <span style="font-size: 0.8rem; color: var(--text-secondary);">ft</span></div>
+                            <div class="card-trend trend-up">Active: Rig Alpha</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">Global Logistics Node</div>
+                            <div class="card-value">Active</div>
+                            <div class="card-trend">Lagos Hub Connected</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-label">AI Processing Load</div>
+                            <div class="card-value">12%</div>
+                            <div class="card-trend">Low Latency</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- APP VIEWPORT -->
+                <div id="view-app" class="viewport">
+                    <iframe id="frame-gaia" class="suite-frame" src="about:blank"></iframe>
+                    <iframe id="frame-petrosight" class="suite-frame" src="about:blank"></iframe>
+                    <iframe id="frame-omesham" class="suite-frame" src="about:blank"></iframe>
+                    <iframe id="frame-petweb" class="suite-frame" src="about:blank"></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
