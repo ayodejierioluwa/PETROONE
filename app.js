@@ -3,12 +3,13 @@ const SuiteEngine = (() => {
     let currentApp = 'home';
     let managerOnline = false;
 
+    const host = window.location.hostname;
     const APPS = {
         'home': { name: 'Global Overview', path: 'Dashboard', url: null },
-        'gaia': { name: 'GAIA AI', path: 'Asset Intelligence', url: 'http://localhost:5001' },
-        'petrosight': { name: 'PetroSight AI', path: 'Predictive Ops', url: 'http://localhost:3005' },
-        'omesham': { name: 'Omesham AI', path: 'Drilling Optimization', url: 'http://localhost:3006' },
-        'petweb': { name: 'PetWeb Finder', path: 'Data Retrieval', url: 'http://localhost:3003' }
+        'gaia': { name: 'GAIA AI', path: 'Asset Intelligence', url: `http://${host}:5001` },
+        'petrosight': { name: 'PetroSight AI', path: 'Predictive Ops', url: `http://${host}:3005` },
+        'omesham': { name: 'Omesham AI', path: 'Drilling Optimization', url: `http://${host}:3006` },
+        'petweb': { name: 'PetWeb Finder', path: 'Data Retrieval', url: `http://${host}:3003` }
     };
 
     const init = () => {
