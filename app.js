@@ -264,7 +264,7 @@ const SuiteEngine = (() => {
         }, 5000);
     };
 
-    return { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout };
+    window.SuiteEngine = { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout };
 })();
 
-window.addEventListener('DOMContentLoaded', SuiteEngine.init);
+window.addEventListener('DOMContentLoaded', window.SuiteEngine.init);
