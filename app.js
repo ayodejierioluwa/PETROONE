@@ -13,6 +13,18 @@ const SuiteEngine = (() => {
         'petweb': { name: 'PetWeb Finder', path: 'Data Retrieval', url: `http://${host}:3003` }
     };
 
+    const preloadMicroApps = () => {
+        console.log("SuiteEngine: Background hot-preloading micro-frontend streaming nodes...");
+        ['omesham', 'petrosight'].forEach(appId => {
+            const frame = document.getElementById(`frame-${appId}`);
+            if (frame && !frame.dataset.loaded) {
+                frame.src = APPS[appId].url;
+                frame.dataset.loaded = 'true';
+                console.log(`SuiteEngine: Preloaded streaming node [${appId}] in background.`);
+            }
+        });
+    };
+
     const init = () => {
         console.log("SuiteEngine: Initializing SSO master controller...");
         
@@ -23,6 +35,7 @@ const SuiteEngine = (() => {
                 const session = JSON.parse(sessionStr);
                 if (session && session.username && session.token) {
                     hideSSOOverlay();
+                    preloadMicroApps();
                 }
             } catch (e) {
                 localStorage.removeItem('petroone_sso_session');
@@ -101,7 +114,7 @@ const SuiteEngine = (() => {
             if (event.data.type === 'OMESHAM_DEPTH_UPDATE') {
                 const depthVal = document.getElementById('noc-depth');
                 if (depthVal) {
-                    const depth = 12450.0 + event.data.depth;
+                    const depth = event.data.depth;
                     depthVal.innerHTML = `${depth.toLocaleString(undefined, {minimumFractionDigits:1, maximumFractionDigits:1})} <span style="font-size: 0.8rem; color: var(--text-secondary);">ft</span>`;
                 }
             }
@@ -248,6 +261,7 @@ const SuiteEngine = (() => {
                     }));
                     setTimeout(() => {
                         hideSSOOverlay();
+                        preloadMicroApps();
                         // Trigger hot load of active apps if selected
                         switchApp(currentApp);
                     }, 1000);
