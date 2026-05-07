@@ -274,7 +274,9 @@ const SuiteEngine = (() => {
         }, 5000);
     };
 
-    window.SuiteEngine = { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout };
+    const publicAPI = { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout };
+    window.SuiteEngine = publicAPI;
+    return publicAPI;
 })();
 
 window.addEventListener('DOMContentLoaded', window.SuiteEngine.init);
