@@ -32,19 +32,25 @@ const SuiteEngine = (() => {
         updateStatus();
         setInterval(updateStatus, 3000);
         
-        // Loader timeout
-        setTimeout(() => {
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-        }, 1200);
+        // Loader timeout - Safely guarded
+        const loader = document.getElementById('loader');
+        if (loader) {
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 1200);
+        }
 
-        // Focus Bridge: Listen for any mouse interaction on the main stage to help focus the iframe
-        document.querySelector('.workspace').addEventListener('mousedown', () => {
-            if (currentApp !== 'home') {
-                const frame = document.getElementById(`frame-${currentApp}`);
-                if (frame) setTimeout(() => frame.focus(), 10);
-            }
-        });
+        // Focus Bridge: Listen for any mouse interaction on the main stage to help focus the iframe - Safely guarded
+        const workspace = document.querySelector('.workspace');
+        if (workspace) {
+            workspace.addEventListener('mousedown', () => {
+                if (currentApp !== 'home') {
+                    const frame = document.getElementById(`frame-${currentApp}`);
+                    if (frame) setTimeout(() => frame.focus(), 10);
+                }
+            });
+        }
 
         // SSO Message Broker: Listen for session requests from child iframes (GAIA/Omesham/PetroSight)
         window.addEventListener('message', (event) => {
@@ -165,15 +171,19 @@ const SuiteEngine = (() => {
 
     const showMsg = (text, type) => {
         const msgDiv = document.getElementById('sso-msg');
-        msgDiv.innerText = text;
-        msgDiv.className = `sso-msg ${type}`;
-        msgDiv.style.display = 'block';
+        if (msgDiv) {
+            msgDiv.innerText = text;
+            msgDiv.className = `sso-msg ${type}`;
+            msgDiv.style.display = 'block';
+        }
     };
 
     const hideSSOOverlay = () => {
         const overlay = document.getElementById('sso-overlay');
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.classList.remove('active'), 500);
+        if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.classList.remove('active'), 500);
+        }
     };
 
     const logout = () => {
