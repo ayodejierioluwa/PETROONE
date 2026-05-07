@@ -3,6 +3,7 @@ const SuiteEngine = (() => {
     let currentApp = 'home';
     let managerOnline = false;
     let isRegisterMode = false;
+    let voiceAlertsEnabled = true;
 
     const host = window.location.hostname;
     const APPS = {
@@ -23,6 +24,28 @@ const SuiteEngine = (() => {
                 console.log(`SuiteEngine: Preloaded streaming node [${appId}] in background.`);
             }
         });
+    };
+
+    const toggleVoiceAlerts = () => {
+        voiceAlertsEnabled = !voiceAlertsEnabled;
+        const icon = document.getElementById('voice-alerts-icon');
+        const text = document.getElementById('voice-alerts-text');
+        const btn = document.getElementById('voice-alerts-btn');
+        if (voiceAlertsEnabled) {
+            if (icon) icon.innerText = '🔊';
+            if (text) text.innerText = 'Voice Alerts: ON';
+            if (btn) {
+                btn.style.color = 'var(--accent-blue)';
+                btn.style.borderColor = 'rgba(0, 212, 255, 0.25)';
+            }
+        } else {
+            if (icon) icon.innerText = '🔇';
+            if (text) text.innerText = 'Voice Alerts: OFF';
+            if (btn) {
+                btn.style.color = 'var(--text-secondary)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }
+        }
     };
 
     const init = () => {
@@ -93,6 +116,22 @@ const SuiteEngine = (() => {
                 alertsFeed.removeChild(alertsFeed.firstChild);
             }
             alertsFeed.scrollTop = alertsFeed.scrollHeight;
+
+            if (voiceAlertsEnabled && (level === 'warning' || level === 'critical')) {
+                try {
+                    const synth = window.speechSynthesis;
+                    if (synth) {
+                        synth.cancel();
+                        const phrase = `Alert. ${text.replace(':', '.')}`;
+                        const utterance = new SpeechSynthesisUtterance(phrase);
+                        utterance.rate = 0.95;
+                        utterance.pitch = 1.05;
+                        synth.speak(utterance);
+                    }
+                } catch (e) {
+                    console.error("SpeechSynthesis error:", e);
+                }
+            }
         };
 
         window.addEventListener('message', (event) => {
@@ -379,7 +418,7 @@ const SuiteEngine = (() => {
         }, 5000);
     };
 
-    const publicAPI = { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout };
+    const publicAPI = { init, switchApp, launchAll, toggleSSOMode, handleSSOSubmit, logout, toggleVoiceAlerts };
     window.SuiteEngine = publicAPI;
     return publicAPI;
 })();

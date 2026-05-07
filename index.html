@@ -71,7 +71,10 @@
                     <div class="breadcrumb">PetroOne / <span id="bread-path">Dashboard</span></div>
                     <h2 class="context-title" id="bread-title">Global Overview</h2>
                 </div>
-                <div class="header-actions">
+                <div class="header-actions" style="display: flex; gap: 0.75rem; align-items: center;">
+                    <button id="voice-alerts-btn" class="launch-btn" style="background: rgba(0, 212, 255, 0.05); border-color: rgba(0, 212, 255, 0.25); color: var(--accent-blue); display: flex; align-items: center; gap: 0.4rem; padding: 10px 16px;" onclick="SuiteEngine.toggleVoiceAlerts()">
+                        <span id="voice-alerts-icon">🔊</span> <span id="voice-alerts-text">Voice Alerts: ON</span>
+                    </button>
                     <button id="main-launch-btn" class="launch-btn" onclick="SuiteEngine.launchAll()">Initialize Suite</button>
                 </div>
             </header>
